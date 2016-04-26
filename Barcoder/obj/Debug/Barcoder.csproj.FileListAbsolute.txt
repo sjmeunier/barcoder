@@ -1,0 +1,11 @@
+c:\Work\Barcoder\Barcoder\bin\Debug\Barcoder.exe
+c:\Work\Barcoder\Barcoder\bin\Debug\Barcoder.pdb
+c:\Work\Barcoder\Barcoder\obj\Debug\ResolveAssemblyReference.cache
+c:\Work\Barcoder\Barcoder\obj\Debug\Barcoder.MainForm.resources
+c:\Work\Barcoder\Barcoder\obj\Debug\Barcoder.Properties.Resources.resources
+c:\Work\Barcoder\Barcoder\obj\Debug\Barcoder.csproj.GenerateResource.Cache
+c:\Work\Barcoder\Barcoder\obj\Debug\Barcoder.exe
+c:\Work\Barcoder\Barcoder\obj\Debug\Barcoder.pdb
+c:\Work\Barcoder\Barcoder\obj\Debug\Barcoder.AboutBox.resources
+c:\Work\Barcoder\Barcoder\bin\Debug\BarcoderLib.dll
+c:\Work\Barcoder\Barcoder\bin\Debug\BarcoderLib.pdb
