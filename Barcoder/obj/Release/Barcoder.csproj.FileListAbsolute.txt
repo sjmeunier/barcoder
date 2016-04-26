@@ -20,3 +20,14 @@ C:\Users\serge.KT-CPT\Downloads\HDBackup\Sourcecode\DOTNET\Barcoder\Barcoder\obj
 C:\Users\serge.KT-CPT\Downloads\HDBackup\Sourcecode\DOTNET\Barcoder\Barcoder\obj\Release\Barcoder.MainForm.resources
 C:\Users\serge.KT-CPT\Downloads\HDBackup\Sourcecode\DOTNET\Barcoder\Barcoder\obj\Release\Barcoder.Properties.Resources.resources
 C:\Users\serge.KT-CPT\Downloads\HDBackup\Sourcecode\DOTNET\Barcoder\Barcoder\obj\Release\Barcoder.csproj.GenerateResource.Cache
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.exe
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.pdb
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.csprojResolveAssemblyReference.cache
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.AboutBox.resources
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.MainForm.resources
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.Properties.Resources.resources
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\obj\Release\Barcoder.csproj.GenerateResource.Cache
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\bin\Release\Barcoder.exe
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\bin\Release\Barcoder.pdb
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\bin\Release\BarcoderLib.dll
+C:\Mywork\Projects\GitHub\Barcoder\Barcoder\bin\Release\BarcoderLib.pdb

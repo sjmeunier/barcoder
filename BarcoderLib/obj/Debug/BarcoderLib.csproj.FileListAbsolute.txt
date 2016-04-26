@@ -3,3 +3,7 @@ c:\Work\Libs\Barcoder\BarcoderLib\bin\Debug\BarcoderLib.pdb
 c:\Work\Libs\Barcoder\BarcoderLib\obj\Debug\ResolveAssemblyReference.cache
 c:\Work\Libs\Barcoder\BarcoderLib\obj\Debug\BarcoderLib.dll
 c:\Work\Libs\Barcoder\BarcoderLib\obj\Debug\BarcoderLib.pdb
+C:\Mywork\Projects\GitHub\Barcoder\BarcoderLib\bin\Debug\BarcoderLib.dll
+C:\Mywork\Projects\GitHub\Barcoder\BarcoderLib\bin\Debug\BarcoderLib.pdb
+C:\Mywork\Projects\GitHub\Barcoder\BarcoderLib\obj\Debug\BarcoderLib.dll
+C:\Mywork\Projects\GitHub\Barcoder\BarcoderLib\obj\Debug\BarcoderLib.pdb
