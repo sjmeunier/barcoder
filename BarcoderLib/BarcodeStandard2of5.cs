@@ -7,14 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodeStandard2of5
+    public class BarcodeStandard2of5 : IBarcode
     {
-        private string gLeftGuard = "1111011110110";
-        private string gRightGuard = "1111011011110";
+        private string _leftGaurd = "1111011110110";
+        private string _rightGaurd = "1111011011110";
         private string[] gCoding = { "11011011111101111110110", "11111101101101101111110", "11011111101101101111110", 
                                      "11111101111110110110110", "11011011111101101111110", "11111101101111110110110",
                                      "11011111101111110110110", "11011011011111101111110", "11111101101101111110110", "11011111101101111110110" };
-        public Bitmap Encode(string message)
+        public Bitmap EncodeToBitmap(string message)
         {
             string encodedMessage;
             string fullMessage;
@@ -25,12 +25,20 @@ namespace BarcoderLib
             Validate(message);
 
             fullMessage = message + CalcParity(message).ToString().Trim();
-            encodedMessage = EncodeBarcode(fullMessage);
+            encodedMessage = Encode(fullMessage);
 
             PrintBarcode(g, encodedMessage, fullMessage, 350, 100);
 
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            Validate(message);
+            message += CalcParity(message).ToString().Trim();
+            return Encode(message);
+        }
+
         private void Validate(string message)
         {
 
@@ -71,17 +79,17 @@ namespace BarcoderLib
             }
         }
 
-        private string EncodeBarcode(string message)
+        private string Encode(string message)
         {
             int i;
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
 
             for (i = 0; i < message.Length; i++)
             {
                 encodedString += gCoding[Convert.ToInt32(message[i].ToString())];
             }
 
-            encodedString += gRightGuard;
+            encodedString += _rightGaurd;
 
             return encodedString;
         }

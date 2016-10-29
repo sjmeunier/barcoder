@@ -6,15 +6,19 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodeMSI
+    public class BarcodeMSI : IBarcode
     {
-        private string gLeftGuard = "110";
-        private string gRightGuard = "1001";
+        private string _leftGaurd = "110";
+        private string _rightGaurd = "1001";
         private string[] gCoding = {  "100100100100", "100100100110", "100100110100", "100100110110", "100110100100", 
                                       "100110100110", "100110110100", "100110110110", "110100100100", "110100100110"};
 
+        public Bitmap EncodeToBitmap(string message)
+        {
+            return EncodeToBitmap(message, Enums.Modulo.None, Enums.MSIWeighting.IBM);
+        }
 
-        public Bitmap Encode(string message, string modulo, string weightType)
+        public Bitmap EncodeToBitmap(string message, Enums.Modulo modulo, Enums.MSIWeighting weightType)
         {
             string encodedMessage;
             string fullMessage;
@@ -22,32 +26,61 @@ namespace BarcoderLib
             Bitmap barcodeImage = new Bitmap(250, 100);
             Graphics g = Graphics.FromImage(barcodeImage);
 
-
             Validate(message);
             fullMessage = message;
             switch (modulo)
             {
-                case "Modulo 10":
+                case Enums.Modulo.Modulo10:
                     fullMessage = message + CalcParity10(message).ToString().Trim();
                     break;
-                case "Modulo 11":
+                case Enums.Modulo.Modulo11:
                     fullMessage = message + CalcParity11(message, weightType).ToString().Trim();
                     break;
-                case "Modulo 1011":
+                case Enums.Modulo.Modulo1011:
                     fullMessage = message + CalcParity10(message).ToString().Trim();
                     fullMessage = fullMessage + CalcParity11(fullMessage, weightType).ToString().Trim();
                     break;
-                case "Modulo 1110":
+                case Enums.Modulo.Modulo1110:
                     fullMessage = message + CalcParity11(message, weightType).ToString().Trim();
                     fullMessage = fullMessage + CalcParity10(fullMessage).ToString().Trim();
                     break;
             }
-            encodedMessage = EncodeBarcode(fullMessage);
+            encodedMessage = Encode(fullMessage);
 
             PrintBarcode(g, encodedMessage, fullMessage, 250, 100);
 
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            return EncodeToString(message, Enums.Modulo.None, Enums.MSIWeighting.IBM);
+        }
+
+        public string EncodeToString(string message, Enums.Modulo modulo, Enums.MSIWeighting weightType)
+        {
+            Validate(message);
+            string fullMessage = message;
+            switch (modulo)
+            {
+                case Enums.Modulo.Modulo10:
+                    fullMessage = message + CalcParity10(message).ToString().Trim();
+                    break;
+                case Enums.Modulo.Modulo11:
+                    fullMessage = message + CalcParity11(message, weightType).ToString().Trim();
+                    break;
+                case Enums.Modulo.Modulo1011:
+                    fullMessage = message + CalcParity10(message).ToString().Trim();
+                    fullMessage = fullMessage + CalcParity11(fullMessage, weightType).ToString().Trim();
+                    break;
+                case Enums.Modulo.Modulo1110:
+                    fullMessage = message + CalcParity11(message, weightType).ToString().Trim();
+                    fullMessage = fullMessage + CalcParity10(fullMessage).ToString().Trim();
+                    break;
+            }
+            return Encode(fullMessage);
+        }
+
         private void Validate(string message)
         {
 
@@ -88,16 +121,16 @@ namespace BarcoderLib
 
         }
 
-        private string EncodeBarcode(string message)
+        private string Encode(string message)
         {
             int i;
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
 
             for (i = 0; i < message.Length; i++)
             {
                 encodedString += gCoding[Convert.ToInt32(message[i].ToString())];
             }
-            encodedString += gRightGuard;
+            encodedString += _rightGaurd;
 
             return encodedString;
         }
@@ -153,13 +186,13 @@ namespace BarcoderLib
 
          }
 
-        private int CalcParity11(string message, string weightType)
+        private int CalcParity11(string message, Enums.MSIWeighting weightType)
         {
             int weightMax = 0;
             int sum = 0;
             int parity;
 
-            if(weightType == "IBM")
+            if(weightType == Enums.MSIWeighting.IBM)
             {
                 weightMax = 7;
             }

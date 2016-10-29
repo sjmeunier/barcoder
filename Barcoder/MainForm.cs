@@ -29,7 +29,43 @@ namespace Barcoder
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            var formatItems = new[] {
+                new { Value = Enums.Barcodes.EAN13, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.EAN13) },
+                new { Value = Enums.Barcodes.EAN8, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.EAN8) },
+                new { Value = Enums.Barcodes.UPC2, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.UPC2) },
+                new { Value = Enums.Barcodes.UPC5, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.UPC5) },
+                new { Value = Enums.Barcodes.UPCA, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.UPCA) },
+                new { Value = Enums.Barcodes.UPCE, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.UPCE) },
+                new { Value = Enums.Barcodes.Standard2Of5, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.Standard2Of5) },
+                new { Value = Enums.Barcodes.Interleaved2Of5, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.Interleaved2Of5) },
+                new { Value = Enums.Barcodes.Postnet, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.Interleaved2Of5) },
+                new { Value = Enums.Barcodes.MSI, Text = Extensions.GetDescription<Enums.Barcodes>(Enums.Barcodes.MSI) }
+            };
 
+            cboFormat.DisplayMember = "Text";
+            cboFormat.ValueMember = "Value";
+            cboFormat.DataSource = formatItems;
+
+            var moduloItems = new[] {
+                new { Value = Enums.Modulo.None, Text = Extensions.GetDescription<Enums.Modulo>(Enums.Modulo.None) },
+                new { Value = Enums.Modulo.Modulo10, Text = Extensions.GetDescription<Enums.Modulo>(Enums.Modulo.Modulo10) },
+                new { Value = Enums.Modulo.Modulo11, Text = Extensions.GetDescription<Enums.Modulo>(Enums.Modulo.Modulo11) },
+                new { Value = Enums.Modulo.Modulo1011, Text = Extensions.GetDescription<Enums.Modulo>(Enums.Modulo.Modulo1011) },
+                new { Value = Enums.Modulo.Modulo1110, Text = Extensions.GetDescription<Enums.Modulo>(Enums.Modulo.Modulo1110) }
+            };
+
+            cboModulo.DisplayMember = "Text";
+            cboModulo.ValueMember = "Value";
+            cboModulo.DataSource = moduloItems;
+
+            var weightingItems = new[] {
+                new { Value = Enums.MSIWeighting.IBM, Text = Extensions.GetDescription<Enums.MSIWeighting>(Enums.MSIWeighting.IBM) },
+                new { Value = Enums.MSIWeighting.NCR, Text = Extensions.GetDescription<Enums.MSIWeighting>(Enums.MSIWeighting.NCR) }
+            };
+
+            cboWeightType.DisplayMember = "Text";
+            cboWeightType.ValueMember = "Value";
+            cboWeightType.DataSource = weightingItems;
         }
 
         private void cmdEncode_Click(object sender, EventArgs e)
@@ -38,62 +74,54 @@ namespace Barcoder
 
             try
             {
-                switch (cboFormat.Text.Trim())
+                Enums.Barcodes barcodeType = (Enums.Barcodes)cboFormat.SelectedValue;
+
+                IBarcode barcoder = null;
+                switch (barcodeType)
                 {
-                    case "EAN-8":
-                        BarcodeEAN8 encoderEAN8 = new BarcodeEAN8();
-                        picOutput.Image = encoderEAN8.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.EAN13:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.EAN13);
                         break;
-                    case "EAN-13":
-                        BarcodeEAN13 encoderEAN13 = new BarcodeEAN13();
-                        picOutput.Image = encoderEAN13.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.EAN8:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.EAN8);
                         break;
-                    case "Interleaved 2 of 5":
-                        BarcodeInter2of5 encoderInter2of5 = new BarcodeInter2of5();
-                        picOutput.Image = encoderInter2of5.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.UPC2:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.UPC2);
                         break;
-                    case "MSI":
-                        BarcodeMSI encoderMSI = new BarcodeMSI();
-                        picOutput.Image = encoderMSI.Encode(txtMessage.Text.Trim(), cboModulo.Text.Trim(), cboWeightType.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.UPC5:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.UPC5);
                         break;
-                    case "Standard 2 of 5":
-                        BarcodeStandard2of5 encoderStandard2of5 = new BarcodeStandard2of5();
-                        picOutput.Image = encoderStandard2of5.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.UPCA:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.UPCA);
                         break;
-                    case "Postnet":
-                        BarcodePostnet encoderPostnet = new BarcodePostnet();
-                        picOutput.Image = encoderPostnet.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.UPCE:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.UPCE);
                         break;
-                    case "UPC-A":
-                        BarcodeUPCA encoderUPCA = new BarcodeUPCA();
-                        picOutput.Image = encoderUPCA.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.Interleaved2Of5:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.Interleaved2Of5);
                         break;
-                    case "UPC-E":
-                        BarcodeUPCE encoderUPCE = new BarcodeUPCE();
-                        picOutput.Image = encoderUPCE.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.Standard2Of5:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.Standard2Of5);
                         break;
-                    case "UPC-2":
-                        BarcodeUPC2 encoderUPC2 = new BarcodeUPC2();
-                        picOutput.Image = encoderUPC2.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
+                    case Enums.Barcodes.Postnet:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.Postnet);
                         break;
-                    case "UPC-5":
-                        BarcodeUPC5 encoderUPC5 = new BarcodeUPC5();
-                        picOutput.Image = encoderUPC5.Encode(txtMessage.Text.Trim());
-                        cmdSave.Enabled = true;
-                        break;
-                    default:
-                        MessageBox.Show("Incorrect barcode type specified", "Error", MessageBoxButtons.OK);
+                    case Enums.Barcodes.MSI:
+                        barcoder = BarcodeBuilder.CreateBarcode(Enums.Barcodes.MSI);
                         break;
                 }
+
+                if (barcoder == null)
+                {
+                    MessageBox.Show("Invalid barcode type specified", "Error", MessageBoxButtons.OK);
+                    return;
+                }
+
+                if (barcodeType == Enums.Barcodes.MSI)
+                    picOutput.Image = ((BarcodeMSI)barcoder).EncodeToBitmap(txtMessage.Text.Trim(), (Enums.Modulo)cboModulo.SelectedValue, (Enums.MSIWeighting)cboWeightType.SelectedValue);
+                else
+                    picOutput.Image = barcoder.EncodeToBitmap(txtMessage.Text.Trim());
+                cmdSave.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -133,10 +161,10 @@ namespace Barcoder
 
         private void cboFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboFormat.SelectedItem.ToString().Trim() == "MSI")
+            if ((Enums.Barcodes)cboFormat.SelectedValue == Enums.Barcodes.MSI)
             {
                 cboModulo.Visible = true;
-                if ((cboModulo.SelectedItem.ToString() == "Modulo 11") || (cboModulo.SelectedItem.ToString() == "Modulo 1011") || (cboModulo.SelectedItem.ToString() == "Modulo 1110"))
+                if (((Enums.Modulo)cboModulo.SelectedValue == Enums.Modulo.Modulo11) || ((Enums.Modulo)cboModulo.SelectedValue == Enums.Modulo.Modulo1011) || ((Enums.Modulo)cboModulo.SelectedValue == Enums.Modulo.Modulo1110))
                 {
                     cboWeightType.Visible = true;
                 }
@@ -154,7 +182,7 @@ namespace Barcoder
 
         private void cboModulo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if ((cboModulo.SelectedItem.ToString() == "Modulo 11") || (cboModulo.SelectedItem.ToString() == "Modulo 1011") || (cboModulo.SelectedItem.ToString() == "Modulo 1110"))
+            if (((Enums.Modulo)cboModulo.SelectedValue == Enums.Modulo.Modulo11) || ((Enums.Modulo)cboModulo.SelectedValue == Enums.Modulo.Modulo1011) || ((Enums.Modulo)cboModulo.SelectedValue == Enums.Modulo.Modulo1110))
             {
                 cboWeightType.Visible = true;
             }
@@ -162,6 +190,11 @@ namespace Barcoder
             {
                 cboWeightType.Visible = false;
             }
+        }
+
+        private void cboWeightType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

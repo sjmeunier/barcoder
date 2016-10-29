@@ -6,13 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodePostnet
+    public class BarcodePostnet : IBarcode
     {
-        private string gLeftGuard = "1";
-        private string gRightGuard = "1";
+        private string _leftGaurd = "1";
+        private string _rightGaurd = "1";
         private string[] gCoding = { "11000", "00011", "00101", "00111", "01001", "01010", "01100", "10001", "10010", "10100" };
 
-        public Bitmap Encode(string message)
+        public Bitmap EncodeToBitmap(string message)
         {
             string encodedMessage;
             string fullMessage;
@@ -23,12 +23,20 @@ namespace BarcoderLib
 
             Validate(message);
             fullMessage = message + CalcParity(message).ToString().Trim();
-            encodedMessage = EncodeBarcode(fullMessage);
+            encodedMessage = Encode(fullMessage);
 
             PrintBarcode(g, encodedMessage, fullMessage, 250, 100);
 
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            Validate(message);
+            message += CalcParity(message).ToString().Trim();
+            return Encode(message);
+        }
+
         private void Validate(string message)
         {
 
@@ -75,17 +83,17 @@ namespace BarcoderLib
 
         }
 
-        private string EncodeBarcode(string message)
+        private string Encode(string message)
         {
             int i;
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
 
             for (i = 0; i < message.Length; i++)
             {
                 encodedString += gCoding[Convert.ToInt32(message[i].ToString())];
             }
 
-            encodedString += gRightGuard;
+            encodedString += _rightGaurd;
 
             return encodedString;
         }

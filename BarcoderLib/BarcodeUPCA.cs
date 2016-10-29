@@ -6,19 +6,19 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodeUPCA
+    public class BarcodeUPCA : IBarcode
     {
-        private string gLeftGuard = "101";
+        private string _leftGaurd = "101";
         private string gCentreGuard = "01010";
-        private string gRightGuard = "101";
+        private string _rightGaurd = "101";
         private string[] gLH = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
         private string[] gRH = { "1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100" };
-        private int[] gWeighting = { 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
-        private string gLongBars = "11111111110000000000000000000000000000000000011111000000000000000000000000000000000001111111111";
+        private int[] _weighting = { 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
+        private string _longBars = "11111111110000000000000000000000000000000000011111000000000000000000000000000000000001111111111";
 
   
 
-        public Bitmap Encode(string message)
+        public Bitmap EncodeToBitmap(string message)
         {
             string encodedMessage;
             string fullMessage;
@@ -29,12 +29,20 @@ namespace BarcoderLib
 
             Validate(message);
             fullMessage = message + CalcParity(message).ToString().Trim();
-            encodedMessage = EncodeBarcode(fullMessage);
+            encodedMessage = Encode(fullMessage);
 
             PrintBarcode(g, encodedMessage, fullMessage, 250, 100);
 
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            Validate(message);
+            message += CalcParity(message).ToString().Trim();
+            return Encode(message);
+        }
+
         private void Validate(string message)
         {
 
@@ -66,7 +74,7 @@ namespace BarcoderLib
             {
                 if (encodedMessage[i] == '1')
                 {
-                    if (gLongBars[i] == '1')
+                    if (_longBars[i] == '1')
                     {
                         g.FillRectangle(blackBrush, xPos, yTop, 1, barHeight + barGuardHeight);
                     }
@@ -100,10 +108,10 @@ namespace BarcoderLib
 
         }
 
-        private string EncodeBarcode(string message)
+        private string Encode(string message)
         {
             int i;
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
 
             for (i = 0; i < 6; i++)
             {
@@ -115,7 +123,7 @@ namespace BarcoderLib
             {
                 encodedString += gRH[Convert.ToInt32(message[i].ToString())];
             }
-            encodedString += gRightGuard;
+            encodedString += _rightGaurd;
 
             return encodedString;
         }
@@ -127,7 +135,7 @@ namespace BarcoderLib
 
             for (int i = 0; i < 11; i++)
             {
-                sum += Convert.ToInt32(message[i].ToString()) * gWeighting[i];
+                sum += Convert.ToInt32(message[i].ToString()) * _weighting[i];
             }
 
             parity = 10 - (sum % 10);

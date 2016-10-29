@@ -6,35 +6,38 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodeEAN13 
+    public class BarcodeEAN13 : IBarcode
     {
-        private string gLeftGuard = "101";
+        private string _leftGaurd = "101";
         private string gCentreGuard = "01010";
-        private string gRightGuard = "101";
+        private string _rightGaurd = "101";
         private string[] gLHOdd = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"};
         private string[] gLHEven = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111"};
         private string[] gRH = {"1110010", "1100110", "1101100", "1000010", "1011100", "1001110", "1010000", "1000100", "1001000", "1110100"};
         private string[] gParity = {"111111", "110100", "110010", "110001", "101100", "100110", "100011", "101010", "101001", "100101" };
-        private int[] gWeighting = { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
-        private string gLongBars = "11100000000000000000000000000000000000000000011111000000000000000000000000000000000000000000111";
+        private int[] _weighting = { 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3 };
+        private string _longBars = "11100000000000000000000000000000000000000000011111000000000000000000000000000000000000000000111";
 
-        public Bitmap Encode(string message)
+        public Bitmap EncodeToBitmap(string message)
         {
-            string encodedMessage;
-            string fullMessage;
+            Validate(message);
+            message += CalcParity(message).ToString().Trim();
+            string encodedMessage = Encode(message);
 
             Bitmap barcodeImage = new Bitmap(250, 100);
             Graphics g = Graphics.FromImage(barcodeImage);
-
-
-            Validate(message);
-            fullMessage = message + CalcParity(message).ToString().Trim();
-            encodedMessage = EncodeBarcode(fullMessage);
-
-            PrintBarcode(g, encodedMessage, fullMessage, 250, 100);
+            PrintBarcode(g, encodedMessage, message, 250, 100);
             
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            Validate(message);
+            message += CalcParity(message).ToString().Trim();
+            return Encode(message);
+        }
+
         private void Validate(string message)
         {
             
@@ -66,7 +69,7 @@ namespace BarcoderLib
             {
                 if (encodedMessage[i] == '1')
                 {
-                    if (gLongBars[i] == '1')
+                    if (_longBars[i] == '1')
                     {
                         g.FillRectangle(blackBrush, xPos, yTop, 1, barHeight + barGuardHeight);
                     }
@@ -98,12 +101,12 @@ namespace BarcoderLib
              
         }
 
-        private string EncodeBarcode(string message)
+        public string Encode(string message)
         {
             int i;
             char parity;
 
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
             int parityCode = Convert.ToInt32(message[0].ToString());
 
             for (i = 1; i < 7; i++)
@@ -124,7 +127,7 @@ namespace BarcoderLib
             {
                 encodedString += gRH[Convert.ToInt32(message[i].ToString())];
             }
-            encodedString += gRightGuard;
+            encodedString += _rightGaurd;
 
             return encodedString;
         }
@@ -136,7 +139,7 @@ namespace BarcoderLib
 
             for(int i = 0; i < 12; i++)
             {
-                sum += Convert.ToInt32(message[i].ToString()) * gWeighting[i];
+                sum += Convert.ToInt32(message[i].ToString()) * _weighting[i];
             }
 
             parity = 10 - (sum % 10);

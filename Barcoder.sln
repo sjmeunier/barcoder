@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barcoder", "Barcoder\Barcoder.csproj", "{9294C7A8-B16E-4A9B-A296-ED10B4CABA1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoderLib", "BarcoderLib\BarcoderLib.csproj", "{DE365EE5-91AF-4A6B-BBB7-2B95DF29BE93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcoderAPI", "BarcoderAPI\BarcoderAPI.csproj", "{538354D3-A55A-4AED-90A0-1460F76A14DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DE365EE5-91AF-4A6B-BBB7-2B95DF29BE93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE365EE5-91AF-4A6B-BBB7-2B95DF29BE93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE365EE5-91AF-4A6B-BBB7-2B95DF29BE93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538354D3-A55A-4AED-90A0-1460F76A14DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538354D3-A55A-4AED-90A0-1460F76A14DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538354D3-A55A-4AED-90A0-1460F76A14DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538354D3-A55A-4AED-90A0-1460F76A14DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

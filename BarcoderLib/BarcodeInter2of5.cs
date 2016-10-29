@@ -6,28 +6,33 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodeInter2of5
+    public class BarcodeInter2of5 : IBarcode
     {
-        private string gLeftGuard = "1010";
-        private string gRightGuard = "01101";
-        private string[] gOdd = { "1011001", "1101011", "1001011", "1100101", "1011011", "1101101", "1001101", "1010011", "1101001", "1001001" };
-        private string[] gEven = { "0100110", "0010100", "0110100", "0011010", "0100100", "0010010", "0110010", "0101100", "0010110", "0110110" };
+        private string _leftGaurd = "1010";
+        private string _rightGaurd = "01101";
+        private string[] _odd = { "1011001", "1101011", "1001011", "1100101", "1011011", "1101101", "1001101", "1010011", "1101001", "1001001" };
+        private string[] _even = { "0100110", "0010100", "0110100", "0011010", "0100100", "0010010", "0110010", "0101100", "0010110", "0110110" };
 
-        public Bitmap Encode(string message)
+        public Bitmap EncodeToBitmap(string message)
         {
             string encodedMessage;
 
             Bitmap barcodeImage = new Bitmap(250, 100);
             Graphics g = Graphics.FromImage(barcodeImage);
 
-
-            Validate(message);
-            encodedMessage = EncodeBarcode(message);
+            encodedMessage = EncodeToString(message);
 
             PrintBarcode(g, encodedMessage, message, 350, 100);
 
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            Validate(message);
+            return Encode(message);
+        }
+
         private void Validate(string message)
         {
 
@@ -68,24 +73,24 @@ namespace BarcoderLib
             }
         }
 
-        private string EncodeBarcode(string message)
+        private string Encode(string message)
         {
             int i;
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
 
             for (i = 0; i < message.Length; i++)
             {
                 if ((i % 2) == 0)
                 {
-                    encodedString += gOdd[Convert.ToInt32(message[i].ToString())];
+                    encodedString += _odd[Convert.ToInt32(message[i].ToString())];
                 }
                 else
                 {
-                    encodedString += gEven[Convert.ToInt32(message[i].ToString())];
+                    encodedString += _even[Convert.ToInt32(message[i].ToString())];
                 }
             }
 
-            encodedString += gRightGuard;
+            encodedString += _rightGaurd;
 
             return encodedString;
         }

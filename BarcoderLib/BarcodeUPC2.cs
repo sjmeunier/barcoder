@@ -6,29 +6,32 @@ using System.Text.RegularExpressions;
 
 namespace BarcoderLib
 {
-    public class BarcodeUPC2 
+    public class BarcodeUPC2 : IBarcode
     {
-        private string gLeftGuard = "1011";
+        private string _leftGaurd = "1011";
         private string gCentreGuard = "01";
-        private string[] gOdd = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
-        private string[] gEven = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
+        private string[] _odd = { "0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011" };
+        private string[] _even = { "0100111", "0110011", "0011011", "0100001", "0011101", "0111001", "0000101", "0010001", "0001001", "0010111" };
         private string[] gParity = { "11", "10", "01", "00" };
 
-        public Bitmap Encode(string message)
+        public Bitmap EncodeToBitmap(string message)
         {
-            string encodedMessage;
-
             Bitmap barcodeImage = new Bitmap(250, 100);
             Graphics g = Graphics.FromImage(barcodeImage);
 
-
-            Validate(message);
-            encodedMessage = EncodeBarcode(message);
+            string encodedMessage = EncodeToString(message);
 
             PrintBarcode(g, encodedMessage, message, 250, 100);
 
             return barcodeImage;
         }
+
+        public string EncodeToString(string message)
+        {
+            Validate(message);
+            return Encode(message);
+        }
+
         private void Validate(string message)
         {
 
@@ -73,23 +76,23 @@ namespace BarcoderLib
             }
         }
 
-        private string EncodeBarcode(string message)
+        private string Encode(string message)
         {
             int i;
             int parityCode = CalcParity(message);
             char parity;
-            string encodedString = gLeftGuard;
+            string encodedString = _leftGaurd;
 
             for (i = 0; i < 2; i++)
             {
                 parity = gParity[parityCode][i];
                 if (parity == '1')
                 {
-                    encodedString += gOdd[Convert.ToInt32(message[i].ToString())];
+                    encodedString += _odd[Convert.ToInt32(message[i].ToString())];
                 }
                 else
                 {
-                    encodedString += gEven[Convert.ToInt32(message[i].ToString())];
+                    encodedString += _even[Convert.ToInt32(message[i].ToString())];
                 }
                 if (i < 1)
                 {

@@ -62,13 +62,13 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(97, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -77,13 +77,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -100,22 +100,10 @@
             // cboFormat
             // 
             this.cboFormat.FormattingEnabled = true;
-            this.cboFormat.Items.AddRange(new object[] {
-            "EAN-8",
-            "EAN-13",
-            "UPC-A",
-            "UPC-E",
-            "UPC-2",
-            "UPC-5",
-            "MSI",
-            "Postnet",
-            "Interleaved 2 of 5",
-            "Standard 2 of 5"});
             this.cboFormat.Location = new System.Drawing.Point(261, 42);
             this.cboFormat.Name = "cboFormat";
             this.cboFormat.Size = new System.Drawing.Size(148, 21);
             this.cboFormat.TabIndex = 1;
-            this.cboFormat.Text = "EAN-13";
             this.cboFormat.SelectedIndexChanged += new System.EventHandler(this.cboFormat_SelectedIndexChanged);
             // 
             // txtMessage
@@ -154,32 +142,22 @@
             // cboModulo
             // 
             this.cboModulo.FormattingEnabled = true;
-            this.cboModulo.Items.AddRange(new object[] {
-            "None",
-            "Modulo 10",
-            "Modulo 11",
-            "Modulo 1011",
-            "Modulo 1110"});
             this.cboModulo.Location = new System.Drawing.Point(12, 69);
             this.cboModulo.Name = "cboModulo";
             this.cboModulo.Size = new System.Drawing.Size(121, 21);
             this.cboModulo.TabIndex = 3;
-            this.cboModulo.Text = "None";
             this.cboModulo.Visible = false;
             this.cboModulo.SelectedIndexChanged += new System.EventHandler(this.cboModulo_SelectedIndexChanged);
             // 
             // cboWeightType
             // 
             this.cboWeightType.FormattingEnabled = true;
-            this.cboWeightType.Items.AddRange(new object[] {
-            "IBM",
-            "NCR"});
             this.cboWeightType.Location = new System.Drawing.Point(139, 69);
             this.cboWeightType.Name = "cboWeightType";
             this.cboWeightType.Size = new System.Drawing.Size(62, 21);
             this.cboWeightType.TabIndex = 4;
-            this.cboWeightType.Text = "IBM";
             this.cboWeightType.Visible = false;
+            this.cboWeightType.SelectedIndexChanged += new System.EventHandler(this.cboWeightType_SelectedIndexChanged);
             // 
             // MainForm
             // 
